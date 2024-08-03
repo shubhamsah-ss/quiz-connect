@@ -97,6 +97,7 @@ const RegisterForm = () => {
                         disabled={isLoading}
                         name="password"
                         label="Password"
+                        type="password"
                     />
 
                     <FormInput
@@ -104,6 +105,7 @@ const RegisterForm = () => {
                         disabled={isLoading}
                         name="confirmPassword"
                         label="Confirm Password"
+                        type="password"
                     />
 
                     <FormError message={error} />

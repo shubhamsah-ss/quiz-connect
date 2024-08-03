@@ -39,7 +39,7 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
                         {
                             type === "password" && <div className="absolute right-3 bottom-3 hover:cursor-pointer" onClick={visibleHandle}>
                                 {
-                                    !isVisible ? <IconEye /> : <IconEyeClosed />
+                                    isVisible ? <IconEye /> : <IconEyeClosed />
                                 }
                             </div>
                         }
