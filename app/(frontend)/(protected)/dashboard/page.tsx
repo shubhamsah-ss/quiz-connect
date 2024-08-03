@@ -107,7 +107,7 @@ const Dashboard = () => {
             <div className="flex items-center space-x-2">
 
                 <Avatar className="h-14 w-14">
-                    <AvatarImage src={user?.image as string} />
+                    <AvatarImage src={user?.image as string || "/user.svg"} />
                     <AvatarFallback>{user?.name?.charAt(0) + "D" || "User"}</AvatarFallback>
                 </Avatar>
 

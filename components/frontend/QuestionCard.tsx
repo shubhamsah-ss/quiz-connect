@@ -38,8 +38,8 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
     return (
         <Card className="md:p-5 shadow-md drop-shadow-md dark:shadow-neutral-900">
             <CardHeader>
-                <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose lg:prose-lg xl:prose-xl">
-                    <strong>Question:</strong>{parse(item.question)}
+                <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose lg:prose-lg xl:prose-xl dark:text-white">
+                    <strong className="dark:text-white">Question:</strong>{parse(item.question)}
                 </div>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
@@ -76,7 +76,7 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
                     <Report id={item.id} />
                 </div>
                 {isExplanationNeeded && (
-                    <div className="bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md w-full">
+                    <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose lg:prose-lg xl:prose-xl dark:text-white">
                         <p>{parse(item.explanation || "No explanation given for this question.")}</p>
                     </div>
                 )}
