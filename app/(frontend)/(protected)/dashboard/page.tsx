@@ -54,7 +54,7 @@ const Dashboard = () => {
             ...response.data.user,
             isOAuth: data?.user.isOAuth
         })
-    }, [status])
+    }, [data?.user.isOAuth])
 
     useEffect(() => {
         fetchUser()
