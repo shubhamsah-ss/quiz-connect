@@ -4,16 +4,16 @@ import React, { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-import Socials from './Socials';
+import Socials from '@/components/form/Socials';
 import { BottomGradient } from '../BottomGradient';
-import { Form } from '../ui/form';
-import { Button } from '../ui/button';
-import { FormError } from './form-error';
-import { FormSuccess } from './form-success';
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { FormError } from '@/components/form/form-error';
+import { FormSuccess } from '@/components/form/form-success';
 import Link from 'next/link';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { signUpSchema } from '@/schema/formSchemas';
-import { FormInput } from './form-inputs';
+import { FormInput } from '@/components/form/form-inputs';
 import { makePostRequest } from '@/lib/apiResponse';
 
 const RegisterForm = () => {

@@ -5,9 +5,9 @@ import { IconEye, IconEyeClosed } from "@tabler/icons-react"
 import { Camera } from "lucide-react"
 import Image from "next/image"
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react'
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
 

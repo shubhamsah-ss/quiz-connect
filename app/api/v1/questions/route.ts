@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import customResponse from "@/lib/customResponse";
 import { db } from "@/lib/db";
 import { NextRequest } from "next/server";

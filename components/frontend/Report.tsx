@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/sheet"
 import { useState } from 'react'
 import { IconAlertTriangleFilled } from '@tabler/icons-react'
-import ReportForm from '../form/ReportForm'
-import { Button } from '../ui/button'
+import ReportForm from '@/components/form/ReportForm'
+import { Button } from '@/components/ui/button'
 
 
 const Report = ({ id }: { id: string }) => {

@@ -1,7 +1,7 @@
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { signIn } from 'next-auth/react'
 import { IconBrandGithubFilled, IconBrandGoogleFilled } from '@tabler/icons-react'
-import { BottomGradient } from '../BottomGradient'
+import { BottomGradient } from '@/components/BottomGradient'
 
 const Socials = () => {
 

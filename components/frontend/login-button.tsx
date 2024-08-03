@@ -1,8 +1,8 @@
 "use client"
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
-import React from 'react'
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import LoginForm from '../form/form-login'
+import React, { useState } from 'react'
+import LoginForm from '@/components/form/form-login'
 
 interface LoginProps {
     children: React.ReactNode,
@@ -22,14 +22,16 @@ const LoginButton = ({
         router.push("/login")
     } 
 
+    const [open, setOpen] = useState(false)
+
     if(mode == "modal") {
         return(
-            <Dialog>
-                <DialogTrigger asChild={asChild}>
+            <Dialog open={open} onOpenChange={() => setOpen(prev => !prev)}>
+                <DialogTrigger onClick={() => setOpen(open)} asChild={asChild}>
                     {children}
                 </DialogTrigger>
                 <DialogContent className='p-0 bg-transparent border-none'>
-                    <LoginForm />
+                    <LoginForm setOpen={setOpen} />
                 </DialogContent>
             </Dialog>
         )

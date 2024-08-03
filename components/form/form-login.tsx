@@ -12,14 +12,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { BottomGradient } from "../BottomGradient";
-import { FormInput } from "./form-inputs";
-import Socials from "./Socials";
+import { BottomGradient } from "@/components/BottomGradient";
+import { FormInput } from "@/components/form/form-inputs";
+import Socials from "@/components/form/Socials";
 
-export default function LoginForm() {
+export default function LoginForm({ setOpen }: { setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
     const searchParams = useSearchParams()
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
         ? "Email already in use with different account"
@@ -42,6 +42,7 @@ export default function LoginForm() {
     })
 
     function redirect() {
+        if(setOpen) setOpen(false)
         router.replace(DEFAULT_LOGIN_REDIRECT)
     }
 

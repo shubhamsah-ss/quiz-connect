@@ -23,7 +23,7 @@ const ThemeSwitcher = () => {
             size={"icon"}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-            {theme === "light" ? <IconSunFilled size={20} /> : <IconMoonFilled size={20} />}
+            {theme != "dark" ? <IconSunFilled size={20} /> : <IconMoonFilled size={20} />}
         </Button>
     )
 }

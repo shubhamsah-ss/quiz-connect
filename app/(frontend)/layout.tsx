@@ -1,6 +1,8 @@
 import Footer from "@/components/frontend/Footer";
-import Navbar from "@/components/frontend/Navbar";
+import dynamic from "next/dynamic";
 import { ReactNode } from "react";
+
+const Navbar = dynamic(() => import("@/components/frontend/Navbar"))
 
 export default function FrontendLayout({ children }: Readonly<{ children: ReactNode }>) {
     return (

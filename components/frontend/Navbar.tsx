@@ -2,21 +2,24 @@
 import Logout from '@/components/Logout';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui/button';
-import { useUser } from '@/hooks/useUser';
+
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import LoginButton from './login-button';
+import LoginButton from '@/components/frontend/login-button';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
-    const user = useUser()
+
+    const { status } = useSession()
 
     const [isAuthenticated, setAuthentication] = useState(false)
 
     useEffect(() => {
-        setAuthentication(!!user)
-    }, [user])
+        if (status === "authenticated") setAuthentication(true)
+        if (status === "unauthenticated") setAuthentication(false)
+    }, [status])
 
     // const isAuthenticated = false
     // let links = [

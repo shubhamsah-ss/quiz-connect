@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "../ui/button";
-import Report from "./Report";
+import { Button } from "@/components/ui/button";
+import Report from "@/components/frontend/Report";
 import parse from "html-react-parser";
 import { QuestionCardProps } from "@/types/quiz";
 

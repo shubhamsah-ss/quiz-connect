@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { DefaultSession } from "next-auth";
 import { getUserById } from "./data/getUser";
 import { db } from "./lib/db";
+import { getAccountById } from "./data/account";
 
 declare module "next-auth" {
 
@@ -10,6 +11,7 @@ declare module "next-auth" {
         user: {
             id: string;
             role: "ADMIN" | "USER";
+            isOAuth: boolean
         } & DefaultSession["user"];
     }
 
@@ -59,6 +61,8 @@ export const {
 
             session.user.image = null
 
+            session.user.isOAuth = token.isOAuth as boolean
+
             return session;
         },
         async jwt({ token }) {
@@ -70,6 +74,11 @@ export const {
             const existingUser = await getUserById(token.sub)
 
             if (!existingUser) return token;
+
+            const existingAccount = await getAccountById(existingUser.id)
+
+            token.isOAuth = !!existingAccount
+
             token.role = existingUser.role
 
             token.picture = null
