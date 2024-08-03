@@ -3,7 +3,9 @@ import LoginForm from "@/components/form/form-login"
 
 const Login = () => {
     return (
-        <LoginForm />
+        <div className="max-w-md w-full mx-auto">
+            <LoginForm />
+        </div>
     )
 }
 

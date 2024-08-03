@@ -37,7 +37,7 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
                         </FormControl>
                         {rest}
                         {
-                            type === "password" && <div className="absolute right-3 bottom-3 hover:cursor-pointer" onClick={visibleHandle}>
+                            type === "password" && <div className="absolute right-3 bottom-2 hover:cursor-pointer" onClick={visibleHandle}>
                                 {
                                     isVisible ? <IconEye /> : <IconEyeClosed />
                                 }

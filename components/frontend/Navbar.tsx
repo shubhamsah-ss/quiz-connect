@@ -7,6 +7,7 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import LoginButton from './login-button';
 
 const Navbar = () => {
     const user = useUser()
@@ -63,20 +64,27 @@ const Navbar = () => {
                     {
                         isAuthenticated ? (
                             <>
-                                <li className='hover:text-gray-400 text-xl duration-500 my-7 md:my-0'>
-                                    <Link onClick={() => setOpen(false)} className='text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50 h-9 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium' href={"/dashboard"}>Dashboard</Link>
+                                <li>
+                                    <Button variant={"link"} asChild>
+                                        <Link href={"/dashboard"}>Dashboard</Link>
+                                    </Button>
                                 </li>
-                                <li className='hover:text-gray-400 text-xl duration-500 my-7 md:my-0'>
+                                <li>
                                     <Logout />
                                 </li>
                             </>
                         ) : (
                             <>
-                                <li className='hover:text-gray-400 text-xl duration-500 my-7 md:my-0'>
-                                    <Link onClick={() => setOpen(false)} className='text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50 h-9 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium' href={"/login"}>Login</Link>
+                                <li>
+                                    <LoginButton mode='modal' asChild>
+                                        <Button variant={"link"}>Login</Button>
+                                    </LoginButton>
                                 </li>
-                                <li className='hover:text-gray-400 text-xl duration-500 my-7 md:my-0'>
-                                    <Link onClick={() => setOpen(false)} className='text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50 h-9 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium' href={"/register"}>Register</Link>
+
+                                <li>
+                                    <Button variant={"destructive"} asChild>
+                                        <Link href={"/register"}>Register</Link>
+                                    </Button>
                                 </li>
                             </>
                         )
