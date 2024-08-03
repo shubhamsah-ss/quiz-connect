@@ -1,5 +1,6 @@
+import AuthProvider from "@/context/AuthProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
-import { Toaster } from "sonner";
+import { Toaster } from "sonner"
 
 const RootProvider = ({
     children,
@@ -7,16 +8,17 @@ const RootProvider = ({
     children: React.ReactNode;
 }>) => {
     return (
-
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            {children}
-            <Toaster />
-        </ThemeProvider>
+        <AuthProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+            >
+                {children}
+                <Toaster />
+            </ThemeProvider>
+        </AuthProvider>
     )
 }
 
