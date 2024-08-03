@@ -1,0 +1,40 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Quiz Connect API documentation",
+        "description": "Created using swagger-ui-react and openapi by DevSS",
+        "version": "1.0.0",
+        "tags": [
+            {
+                "name": "Categories",
+                "description": "APIs related to categories"
+            },
+            {
+                "name": "Subjects",
+                "description": "APIs related to subjects"
+            },
+            {
+                "name": "Topics",
+                "description": "APIs related to topics"
+            },
+            {
+                "name": "Questions",
+                "description": "APIs related to Questions"
+            },
+            {
+                "name": "Users",
+                "description": "APIs related to users"
+            }
+        ]
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Development server"
+        }
+    ],
+    "paths": {},
+    "components": {
+        "schemas": {}
+    }
+}
