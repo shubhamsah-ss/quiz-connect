@@ -1,6 +1,7 @@
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { signIn } from 'next-auth/react'
 import { IconBrandGithubFilled, IconBrandGoogleFilled } from '@tabler/icons-react'
+import { BottomGradient } from '../BottomGradient'
 
 const Socials = () => {
 
@@ -45,12 +46,3 @@ const Socials = () => {
 }
 
 export default Socials
-
-const BottomGradient = () => {
-    return (
-        <>
-            <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-[2px] dark:h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-            <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-        </>
-    );
-};
