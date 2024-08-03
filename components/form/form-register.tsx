@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { signUpSchema } from '@/schema/formSchemas';
 import { FormInput } from './form-inputs';
+import { makePostRequest } from '@/lib/apiResponse';
 
 const RegisterForm = () => {
     const [isLoading, startLoading] = useTransition()
@@ -45,18 +46,17 @@ const RegisterForm = () => {
     const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
         try {
             startLoading(async () => {
-                setSuccess("Confirmed!")
-                // const response = await makePostRequest({ endpoint: "/auth/register", payload: values, redirect });
+                const response = await makePostRequest({ endpoint: "/auth/register", payload: values, redirect });
 
-                // if (response.success) {
-                //     setSuccess(response.message);
-                //     setError(undefined); // Clear error on success
-                // }
+                if (response.success) {
+                    setSuccess(response.message);
+                    setError(undefined); // Clear error on success
+                }
 
-                // if (response.error) {
-                //     setError(response.error);
-                //     setSuccess(undefined); // Clear success on error
-                // }
+                if (response.error) {
+                    setError(response.error);
+                    setSuccess(undefined); // Clear success on error
+                }
             });
         } catch (error) {
             setError("An error occurred. Please try again.");
