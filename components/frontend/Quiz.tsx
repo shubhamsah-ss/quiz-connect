@@ -57,7 +57,7 @@ const Quiz = ({ query }: QuizProps) => {
                 
             }
         });
-    }, [query, isLoading]);
+    }, [query]);
 
     useEffect(() => {
         fetchData(page);
