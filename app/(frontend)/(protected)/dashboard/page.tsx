@@ -61,14 +61,16 @@ const Dashboard = () => {
     }, [fetchUser])
 
     useEffect(() => {
-        if (!tabValue) {
+        const tab = searchParams.get("tab") as string
+        if (!tab) {
             const query = new URLSearchParams(searchParams)
             query.set("tab", "myprofile")
             router.replace(`${pathname}?${query.toString()}`)
-            setTabValue(searchParams.get("tab") as string)
+            setTabValue("myprofile")
+        } else {
+            setTabValue(tab)
         }
-
-    }, [pathname, searchParams, router, tabValue])
+    }, [pathname, searchParams, router])
 
     const tabContent = useMemo(() => [
         {
@@ -90,14 +92,11 @@ const Dashboard = () => {
     ], [user])
 
     if(status === "loading") return <p>Loading...</p>
-    // if(status === "unauthenticated") {
-    //     window.location.reload()
-    //     return <p>Loading...</p>
-    // }
 
     function handleValueChange(value: string) {
         const query = new URLSearchParams(searchParams)
         query.set("tab", value)
+        setTabValue(value)
         router.replace(`${pathname}?${query.toString()}`)
     }
 
@@ -114,7 +113,7 @@ const Dashboard = () => {
                 <Heading heading={`${user?.name?.split(" ")[0]}'s Dashboard`} />
             </div>
 
-            <CustomTab defaultValue={tabValue} handleValueChange={handleValueChange} tabList={tabList} tabContent={tabContent} />
+            <CustomTab defaultValue={"myProfile"} value={tabValue} handleValueChange={handleValueChange} tabList={tabList} tabContent={tabContent} />
 
         </div>
     )

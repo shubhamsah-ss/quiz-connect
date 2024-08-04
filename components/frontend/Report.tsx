@@ -30,8 +30,11 @@ const Report = ({ id }: { id: string }) => {
             <SheetContent className="w-full">
                 <SheetHeader>
                     <SheetTitle>Report</SheetTitle>
-                    <ReportForm />
                 </SheetHeader>
+                <SheetDescription>
+                    Will be available soon!
+                </SheetDescription>
+                <ReportForm />
             </SheetContent>
         </Sheet>
 

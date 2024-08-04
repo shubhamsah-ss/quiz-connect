@@ -9,6 +9,7 @@ interface CustomTabContentProps {
         label: string,
         className?: string
     }[],
+    value: string,
     tabContent: {
         value: string,
         content: ReactNode,
@@ -20,9 +21,9 @@ interface CustomTabContentProps {
 }
 
 
-const CustomTab = ({defaultValue, tabContent, tabList, tabParentClass, tabListClass, handleValueChange}:CustomTabContentProps) => {
+const CustomTab = ({defaultValue,value, tabContent, tabList, tabParentClass, tabListClass, handleValueChange}:CustomTabContentProps) => {
     return (
-        <Tabs defaultValue={defaultValue} onValueChange={(value) => handleValueChange(value)} className={cn("space-y-10", tabParentClass)}>
+        <Tabs defaultValue={defaultValue} value={value} onValueChange={(value) => handleValueChange(value)} className={cn("space-y-10", tabParentClass)}>
             <TabsList className={cn("bg-background h-16 shadow-md drop-shadow-md dark:shadow-neutral-800", tabListClass)}>
                 {
                     tabList.map(tab => (

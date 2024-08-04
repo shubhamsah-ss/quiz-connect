@@ -62,7 +62,7 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
                                     className="w-full rounded-md object-contain p-2"
                                 />
                             ) : (
-                                <p>{option.value}</p>
+                                <p className="text-wrap">{option.value}</p>
                             )}
                         </div>
                     </Button>
@@ -70,13 +70,13 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
             </CardContent>
             <CardFooter className="flex flex-col space-y-5">
                 <div className="flex items-center justify-between w-full">
-                    <Button variant={"outline"} type="button" onClick={handleExplanation}>
+                    <Button variant={"outline"} type="button" onClick={handleExplanation} className="dark:text-white">
                         Explanation
                     </Button>
                     <Report id={item.id} />
                 </div>
                 {isExplanationNeeded && (
-                    <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose lg:prose-lg xl:prose-xl dark:text-white">
+                    <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose-base dark:text-white">
                         <p>{parse(item.explanation || "No explanation given for this question.")}</p>
                     </div>
                 )}
