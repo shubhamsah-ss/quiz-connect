@@ -1,16 +1,16 @@
 "use client"
+import Report from "@/components/frontend/Report";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
     CardFooter,
     CardHeader
 } from "@/components/ui/card";
+import { QuestionCardProps } from "@/types/quiz";
+import parse from "html-react-parser";
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import Report from "@/components/frontend/Report";
-import parse from "html-react-parser";
-import { QuestionCardProps } from "@/types/quiz";
 
 
 
@@ -35,6 +35,7 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
         return "";
     };
 
+
     return (
         <Card className="md:p-5 shadow-md drop-shadow-md dark:shadow-neutral-900">
             <CardHeader>
@@ -46,7 +47,7 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
                 {item.options.map((option, i) => (
                     <Button
                         variant={"outline"}
-                        key={i}
+                        key={`${option.value}-${selectedOption}`} 
                         disabled={selectedOption !== null}
                         onClick={() => handleOptionClick(option.value)}
                         className={`p-2 h-fit flex justify-between items-center ${getButtonClass(option.value)}`}
@@ -77,7 +78,7 @@ const QuestionCard = ({ item }: QuestionCardProps) => {
                 </div>
                 {isExplanationNeeded && (
                     <div className="min-w-full bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md prose-base dark:text-white">
-                        <p>{parse(item.explanation || "No explanation given for this question.")}</p>
+                        {parse(item.explanation || "No explanation given for this question.")}
                     </div>
                 )}
             </CardFooter>
