@@ -35,9 +35,14 @@ const tabList = [
 ]
 
 const Dashboard = () => {
+    const [refreshTime, setRefreshTime] = useState<number>(3)
     const { status, data } = useSession({
         required: true,
         onUnauthenticated() {
+            if(refreshTime === 0) {
+                window.location.replace("/login")
+            }
+            setRefreshTime(prev => prev - 1)
             window.location.reload()
         },
     })
