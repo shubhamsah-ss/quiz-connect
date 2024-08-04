@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
         if (!session || !session.user) {
             return customResponse({
                 success: false,
-                error: { message: "Please login again!" },
+                error: { message: "Not Authenticated!" },
                 status: 401
             })
         }

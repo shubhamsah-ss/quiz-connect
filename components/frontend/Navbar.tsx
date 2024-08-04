@@ -56,20 +56,22 @@ const Navbar = () => {
                     </Button>
 
                 </div>
-                <ul className={`absolute top-14 px-5 transition-all bg-white dark:bg-black md:bg-transparent h-screen duration-500 ${open ? "right-0 opacity-100 w-[100vw]" : "right-[-300px] opacity-0 md:opacity-100"}
+                <ul className={`absolute right-0 z-50 px-5 transition-all bg-white dark:bg-black md:bg-transparent h-screen duration-500 ${open ? "w-[100vw]" : "w-0 opacity-0 md:opacity-100"}
                 md:w-auto md:pl-0 md:static md:px-3 md:space-x-1 md:flex md:items-center md:h-full`}>
-                    <li className=''>
+                    <li>
                         <ThemeSwitcher />
                     </li>
-                    <li className='hover:text-gray-400 text-xl duration-500 my-7 md:my-0'>
-                        <Link onClick={() => setOpen(false)} href={"/questions"} className='text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50 h-9 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium'>Questions</Link>
+                    <li>
+                        <Button variant={"link"} asChild>
+                        <Link onClick={() => setOpen(false)} href={"/questions"}>Questions</Link>
+                        </Button>
                     </li>
                     {
                         isAuthenticated ? (
                             <>
                                 <li>
                                     <Button variant={"link"} asChild>
-                                        <Link href={"/dashboard"}>Dashboard</Link>
+                                        <Link onClick={() => setOpen(false)} href={"/dashboard"}>Dashboard</Link>
                                     </Button>
                                 </li>
                                 <li>
@@ -86,7 +88,7 @@ const Navbar = () => {
 
                                 <li>
                                     <Button variant={"destructive"} asChild>
-                                        <Link href={"/register"}>Register</Link>
+                                        <Link onClick={() => setOpen(false)} href={"/register"}>Register</Link>
                                     </Button>
                                 </li>
                             </>

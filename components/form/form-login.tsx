@@ -24,9 +24,7 @@ export default function LoginForm({ setOpen }: { setOpen?: React.Dispatch<React.
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
         ? "Email already in use with different account"
         : ""
-
-
-
+    const callbackUrl = searchParams.get("callbackUrl")?.toString()
     const [isLoading, startLoading] = useTransition()
     const router = useRouter()
     const [error, setError] = useState<string | undefined>()
@@ -42,8 +40,8 @@ export default function LoginForm({ setOpen }: { setOpen?: React.Dispatch<React.
     })
 
     function redirect() {
-        if(setOpen) setOpen(false)
-        router.replace(DEFAULT_LOGIN_REDIRECT)
+        if (setOpen) setOpen(false)
+        router.replace(callbackUrl || DEFAULT_LOGIN_REDIRECT)
     }
 
     const onSubmit = async (values: z.infer<typeof signInSchema>) => {

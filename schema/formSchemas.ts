@@ -62,3 +62,8 @@ export const PasswordSchema = z.object({
     message: "Passwords do not match",
     path: ["confirmPassword"], // specify the path of the error
 })
+
+
+export const AdminPinSchema = z.object({
+    adminPin: z.string().length(4, { message: "PIN must be of 4 digits"})
+})

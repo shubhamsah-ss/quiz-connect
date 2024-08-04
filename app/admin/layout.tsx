@@ -1,14 +1,29 @@
-import { ReactNode, Suspense } from "react";
-import Loading from "./loading";
+"use client"
+import useRole from "@/hooks/useRole"
+import { useRouter } from "next/navigation"
+import { ReactNode } from "react"
 
-export default function FrontendLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function AdminAuthLayout({ children }: Readonly<{ children: ReactNode }>) {
+    const isAdmin = useRole("ADMIN")
+
+    const router = useRouter()
+
+    if (isAdmin == "loading") {
+        // Display loading state or message while checking role
+        return (
+            <div className='flex justify-center items-center h-screen bg-white dark:bg-black'>
+                <p className="dark:text-white">Loading...</p>
+            </div>
+        )
+    }
+
+    if(!isAdmin) {
+        router.replace("/")
+    }
+
     return (
-        <>
-            <Suspense fallback={<Loading />}>
-                <main className="bg-white space-y-10 dark:bg-black min-h-[85vh] md:min-h-[87.9vh] mt-[8vh] md:mt-0 p-4 pb-0">
-                    {children}
-                </main>
-            </Suspense>
-        </>
+        <div className='flex justify-center items-center h-screen bg-white dark:bg-black'>
+            {children}
+        </div>
     )
 }

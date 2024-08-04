@@ -31,7 +31,7 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
                     <div className='relative'>
                         <FormControl>
                             <Input id={name} type={type === "password" ? (isVisible ? "text" : "password") : type || "text"}
-                                {...field}
+                                {...field}  
                                 {...inputRest}
                             />
                         </FormControl>

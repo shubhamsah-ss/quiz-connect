@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         if (!session || !session.user) {
             return customResponse({
                 success: false,
-                error: { message: "Please login again!" },
+                error: { message: "Not Authenticated!" },
                 status: 401
             })
         }
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         if(session.user.role != "ADMIN"){
             return customResponse({
                 success: false,
-                error: { message: "You don't have privilege!" },
+                error: { message: "Not Authorized!" },
                 status: 403
             })
         }
