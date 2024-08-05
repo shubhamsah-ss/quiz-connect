@@ -35,18 +35,11 @@ const tabList = [
 ]
 
 const Dashboard = () => {
-    const [refreshTime, setRefreshTime] = useState<number>(5)
+
     const { status, data } = useSession({
         required: true,
         onUnauthenticated() {
-            if(refreshTime === 0) {
-                window.location.replace("/login")
-            } else {
-                setTimeout(() => {
-                    setRefreshTime(prev => prev - 1)
-                    window.location.reload()
-                }, 1000)  // Delay of 1 second before reloading
-            }
+            window.location.reload()
         },
     })
     const searchParams = useSearchParams()
