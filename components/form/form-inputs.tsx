@@ -25,8 +25,8 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
             name={name}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel htmlFor={name}>
-                        <Label>{label}</Label>
+                    <FormLabel asChild>
+                        <Label htmlFor={name}>{label}</Label>
                     </FormLabel>
                     <div className='relative'>
                         <FormControl>

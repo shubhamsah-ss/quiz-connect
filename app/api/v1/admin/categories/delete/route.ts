@@ -4,10 +4,11 @@ import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { cookies } from "next/headers";
 
-export async function POST(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
     const session = await auth()
     const cookiesStore = cookies()
     const adminAuth = cookiesStore.get("adminAuth")
+    const searchParams = request.nextUrl.searchParams;
 
     try {
 
@@ -43,40 +44,25 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        const payload = await request.json();
-        const category: string = payload.values.category
+        let id = searchParams.get("category")?.toString()
 
+        const category = await db.category.delete({
+            where: {id}
+        })
+        
         if (!category) {
             return customResponse({
                 success: false,
-                error: { message: "Category name is required!" },
-                status: 400
+                error: { message: "Something went wrong!" },
+                status: 500
             })
         }
-
-        const name = category.toUpperCase()
-
-        const existingCategory = await db.category.findFirst({
-            where: { name }
-        });
-
-        if (existingCategory) {
-            return customResponse({
-                success: false,
-                error: { message: "Category already exists!" },
-                status: 409
-            })
-        }
-
-        const newCategory = await db.category.create({
-            data: { name }
-        });
 
         return customResponse({
             success: true,
-            message: "New category created!",
-            data: newCategory,
-            status: 201
+            message: `Category deleted!`,
+            data: {},
+            status: 200
         })
     } catch (error: any) {
         return customResponse({

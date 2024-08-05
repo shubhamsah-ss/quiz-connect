@@ -35,35 +35,40 @@ const tabList = [
 ]
 
 const Dashboard = () => {
-    const [refreshTime, setRefreshTime] = useState<number>(3)
+    const [refreshTime, setRefreshTime] = useState<number>(5)
     const { status, data } = useSession({
         required: true,
         onUnauthenticated() {
             if(refreshTime === 0) {
                 window.location.replace("/login")
+            } else {
+                setTimeout(() => {
+                    setRefreshTime(prev => prev - 1)
+                    window.location.reload()
+                }, 1000)  // Delay of 1 second before reloading
             }
-            setRefreshTime(prev => prev - 1)
-            window.location.reload()
         },
     })
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
 
-    const [tabValue, setTabValue] = useState<string>(searchParams.get("tab") as string)
+    const [tabValue, setTabValue] = useState<string>(searchParams.get("tab") || "myProfile")
 
     const [user, setUser] = useState<UserType | null>(null)
-    const fetchUser = useCallback(async () => {
-        const response = await makeGetRequest(`/users`)
-        setUser({
-            ...response.data.user,
-            isOAuth: data?.user.isOAuth
-        })
-    }, [data?.user.isOAuth])
+    
+    
 
     useEffect(() => {
-        fetchUser()
-    }, [fetchUser])
+        const fetchUser = async() => {
+            const response = await makeGetRequest(`/users`)
+            setUser({
+                ...response.data.user,
+                isOAuth: data?.user.isOAuth
+            })
+        }
+        if(!user) fetchUser()
+    }, [user, data?.user.isOAuth])
 
     useEffect(() => {
         const tab = searchParams.get("tab") as string
@@ -96,15 +101,15 @@ const Dashboard = () => {
         }
     ], [user])
 
-    if(status === "loading") return <p>Loading...</p>
-
+    
     function handleValueChange(value: string) {
         const query = new URLSearchParams(searchParams)
         query.set("tab", value)
         setTabValue(value)
         router.replace(`${pathname}?${query.toString()}`)
     }
-
+    
+    if(status === "loading") return <p>Loading...</p>
 
     return (
         <div className="space-y-10 mb-10">

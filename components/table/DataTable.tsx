@@ -17,16 +17,39 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { makeGetRequest } from "@/lib/apiResponse"
+import { toast } from "sonner"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    url: string
 }
 
-export function QuestionDataTable<TData, TValue>({
+export function DataTable<TData, TValue>({
     columns,
-    data,
+    url
 }: DataTableProps<TData, TValue>) {
+    const [dataState, setData] = useState<TData[]>([])
+
+    const data: TData[] = useMemo(() => dataState, [dataState])
+
+    const fetchData = useCallback(async () => {
+        try {
+            if (url && columns) {
+                const response = await makeGetRequest(url);
+                if (response.error) toast.error(response.error)
+                if (response.success) setData(response.data)
+            }
+        } catch (error) {
+
+        }
+    },[url, columns])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
+
     const table = useReactTable({
         data,
         columns,
@@ -35,7 +58,17 @@ export function QuestionDataTable<TData, TValue>({
     })
 
     return (
-        <div>
+        <div className='rounded-md border'>
+            <div className='flex justify-end p-2'>
+                <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    className=''
+                    onClick={fetchData}
+                >
+                    Refresh
+                </Button>
+            </div>
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (

@@ -47,7 +47,7 @@ export async function DELETE(request: NextRequest) {
             return customResponse({
                 success: false,
                 error: { message: "Something went wrong!" },
-                status: 400
+                status: 500
             })
         }
 

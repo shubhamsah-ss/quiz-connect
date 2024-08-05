@@ -12,7 +12,7 @@ export default function AdminLayout({ children }: Readonly<{ children: ReactNode
         >
             <AdminSidebar />
             <Suspense>
-                <main className="bg-white space-y-10 dark:bg-black p-4">
+                <main className="bg-white space-y-10 dark:bg-black p-4 w-full">
                     {children}
                 </main>
             </Suspense>

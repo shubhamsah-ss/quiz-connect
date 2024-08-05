@@ -5,7 +5,7 @@ import { Form } from '@/components/ui/form'
 import { makePatchRequest } from '@/lib/apiResponse'
 import { ProfileSchema } from '@/schema/formSchemas'
 import { UserType } from '@/types/user'
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 import { Edit2 } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { useState, useTransition } from 'react'
@@ -17,16 +17,22 @@ const ProfileForm = ({ user }: { user: UserType | null }) => {
     const [isLoading, startLoading] = useTransition()
     const [isEditable, startEditing] = useState(false)
 
-    const form = useForm({
-        defaultValues: {
-            name: user?.name || "",
-            email: user?.email || "",
-            image: user?.image || "",
-            emailVerified: format(new Date(user?.emailVerified as string), "dd MMMM yyyy") || ""
-        }
-    })
+    const emailVerified = user?.emailVerified
+        ? format(parseISO(user.emailVerified), "dd MMMM yyyy")
+        : "";
 
-    if (!user) return;
+        
+        const form = useForm({
+            defaultValues: {
+                name: user?.name || "",
+                email: user?.email || "",
+                image: user?.image || "",
+                emailVerified: emailVerified || ""
+            }
+        })
+        
+        if (!user) return;
+
     const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
         startLoading(async () => {
             values.email = user.email
@@ -40,6 +46,7 @@ const ProfileForm = ({ user }: { user: UserType | null }) => {
             if (response.error) toast.error(response.error.message)
         })
     }
+
 
     return (
         <div className='relative'>

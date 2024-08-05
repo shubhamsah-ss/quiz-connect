@@ -62,6 +62,7 @@ const AdminSidebar = () => {
                             alt='QuizConnect'
                             width={100}
                             height={100}
+                            priority
                             className='w-20 h-20 object-contain'
                         />
                         <div className="mt-8 flex flex-col gap-2">

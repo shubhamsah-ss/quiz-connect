@@ -7,6 +7,7 @@ const QuestionCard = dynamic(() => import("@/components/frontend/QuestionCard"))
 const QuestionSkeleton = dynamic(() => import("@/components/frontend/QuestionSkeleton"));
 
 const Quiz = ({ query }: QuizProps) => {
+
     const [isLoading, startLoading] = useTransition();
     const [dataState, setData] = useState<QuestionsType[]>([]);
     const [page, setPage] = useState<number>(1);
@@ -31,7 +32,7 @@ const Quiz = ({ query }: QuizProps) => {
     }, [hasMore, isLoading]);
 
     const fetchData = useCallback(async (page: number) => {
-        if (isLoading) return; // Prevent overlap
+        
         startLoading(async () => {
             const queryParams = new URLSearchParams({
                 ...(query.category && { category: query.category }),

@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 
         
         // Save adminAuth in cookies
-        cookies().set('adminAuth', 'true', { secure: true })
+        cookies().set('adminAuth', 'true', { secure: true, maxAge: 3600 })
 
         return customResponse({
             success: true,

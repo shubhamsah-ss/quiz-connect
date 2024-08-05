@@ -5,4 +5,5 @@ export type UserType = {
     image: string,
     emailVerified: string,
     isOAuth?: boolean
+    role?: "ADMIN" | "USER"
 }
