@@ -36,12 +36,8 @@ const tabList = [
 
 const Dashboard = () => {
 
-    const { status, data } = useSession({
-        required: true,
-        onUnauthenticated() {
-            window.location.reload()
-        },
-    })
+    const { status, data } = useSession()
+
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
@@ -61,7 +57,7 @@ const Dashboard = () => {
             })
         }
         if(!user) fetchUser()
-    }, [user, data?.user.isOAuth])
+    }, [user, data])
 
     useEffect(() => {
         const tab = searchParams.get("tab") as string

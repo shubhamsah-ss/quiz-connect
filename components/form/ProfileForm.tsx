@@ -8,7 +8,7 @@ import { UserType } from '@/types/user'
 import { format, parseISO } from "date-fns"
 import { Edit2 } from 'lucide-react'
 import { signIn } from 'next-auth/react'
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from "sonner"
 import { z } from 'zod'
@@ -21,17 +21,26 @@ const ProfileForm = ({ user }: { user: UserType | null }) => {
         ? format(parseISO(user.emailVerified), "dd MMMM yyyy")
         : "";
 
-        
-        const form = useForm({
-            defaultValues: {
-                name: user?.name || "",
-                email: user?.email || "",
-                image: user?.image || "",
-                emailVerified: emailVerified || ""
-            }
-        })
-        
-        if (!user) return;
+
+    const form = useForm({
+        defaultValues: {
+            name: user?.name || "",
+            email: user?.email || "",
+            image: user?.image || "",
+            emailVerified: emailVerified || ""
+        }
+    })
+
+    useEffect(() => {
+        if (user) {
+            form.setValue("name", user?.name || "")
+            form.setValue("email", user?.email || "")
+            form.setValue("image", user?.image || "")
+            form.setValue("emailVerified", user?.emailVerified || "")
+        }
+    }, [user, form])
+
+    if (!user) return;
 
     const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
         startLoading(async () => {
