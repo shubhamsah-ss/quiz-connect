@@ -7,7 +7,7 @@ import { UserType } from "@/types/user"
 import { useSession } from "next-auth/react"
 import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const NewQuestionForm = dynamic(() => import("@/components/form/NewQuestionForm"))
 const RequestForm = dynamic(() => import("@/components/form/RequestForm"))

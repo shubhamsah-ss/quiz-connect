@@ -36,7 +36,7 @@ const ProfileForm = ({ user }: { user: UserType | null }) => {
             form.setValue("name", user?.name || "")
             form.setValue("email", user?.email || "")
             form.setValue("image", user?.image || "")
-            form.setValue("emailVerified", user?.emailVerified || "")
+            form.setValue("emailVerified", emailVerified || "")
         }
     }, [user, form])
 
