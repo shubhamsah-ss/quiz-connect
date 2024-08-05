@@ -12,10 +12,10 @@ const handleDelete = async(id:string) => {
     const response = await makeDeleteRequest(`/questions/delete?question=${id}`)
 
     if(response.success) {
-        toast.success(response.message, {
+        toast.success(`${response.message} Refresh table to see changes`, {
             className: "bg-green-600 text-white border-0"
         })
-        window.location.reload()
+        
     } else {
         toast.error(response.error, {
             className: "bg-destructive text-white border-0"

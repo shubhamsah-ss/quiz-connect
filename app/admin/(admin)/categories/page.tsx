@@ -5,6 +5,7 @@ import { columns } from '@/components/table/admin/categoriesColumns'
 import { DataTable } from '@/components/table/DataTable'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 const NewCategoryForm = dynamic(() => import('@/components/form/admin/new-category'))
 
@@ -12,8 +13,8 @@ const AdminCategories = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     function redirect() {
+        toast.success("New category created! Refresh table to see changes.")
         setOpen(false)
-        window.location.reload()
     }
 
     return (

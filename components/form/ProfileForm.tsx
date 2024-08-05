@@ -68,7 +68,7 @@ const ProfileForm = ({ user }: { user: UserType | null }) => {
                     {!user.isOAuth && <FormImage
                         src={user.image}
                         alt={user.name}
-                        disabled={!isEditable || isLoading}
+                        disabled={!isEditable || isLoading || user.isOAuth as boolean}
                         form={form}
                     />}
                     <div className='grid grid-cols-1
