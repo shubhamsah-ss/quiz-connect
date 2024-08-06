@@ -26,9 +26,11 @@ const AdminCategories = () => {
                     <NewCategoryForm redirect={redirect} />
                 </NewButton>
             </div>
-            
+
             {/* AVAILABLE/EDIT CATEGORIES */}
-            <DataTable columns={columns} url='/admin/categories' />
+            <div className='h-96 overflow-auto px-2'>
+                <DataTable columns={columns} url='/admin/categories' />
+            </div>
         </div>
     )
 }

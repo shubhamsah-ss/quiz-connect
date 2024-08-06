@@ -1,5 +1,7 @@
 "use client"
-import { Button } from "@/components/ui/button"
+import EditDialog from "@/components/admin/EditDialog"
+import AlertMessage from "@/components/AlertMessage"
+import EditTopic from "@/components/form/admin/edit-topic"
 import { makeDeleteRequest } from "@/lib/apiResponse"
 import { CategoryType } from "@/types/categories"
 import { ColumnDef } from "@tanstack/react-table"
@@ -52,7 +54,21 @@ export const columns: ColumnDef<CategoryType>[] = [
         header: "Actions",
         cell: ({ row }) => {
             const id = row.original.id
-            return <Button onClick={() => handleDelete(id)} variant={"link"} className="text-red-500 hover:text-red-700 m-0 p-0">Delete</Button>
+            const name = row.original.name
+            const subject: {
+                id: string,
+                name: string
+            } = row.getValue("subject")
+            
+
+            return (
+                <div className="flex gap-4">
+                    <EditDialog title="Update Subject">
+                        <EditTopic id={id} name={name} defaultInput={subject} />
+                    </EditDialog>
+                    <AlertMessage trigger="Delete" onConfirm={() => handleDelete(id)} />
+                </div>
+            )
         }
     }
 ]

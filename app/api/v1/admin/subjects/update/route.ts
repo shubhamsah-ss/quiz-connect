@@ -5,11 +5,12 @@ import { db } from "@/lib/db";
 import { NextRequest } from "next/server";
 
 type Subject = {
+    id: string,
     subject: string,
     categoriesId: string[]
 }
 
-export async function POST(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
     try {
 
         const session = await auth()
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
         }
 
         const payload = await request.json()
-        const { subject, categoriesId }: Subject = payload.values
+        const { subject, categoriesId, id }: Subject = payload.values
 
 
         if (!subject || !categoriesId) {
@@ -53,8 +54,13 @@ export async function POST(request: NextRequest) {
         const name = subject.trim().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ")
 
         const existingSubject = await db.subject.findFirst({
-            where: { name }
-        })
+            where: {
+                name,
+                id: {
+                    not: id
+                }
+            }
+        });
 
         if (existingSubject) {
             return customResponse({
@@ -81,12 +87,34 @@ export async function POST(request: NextRequest) {
             });
         }
 
+        const existingAssociations = await db.categorySubject.findMany({
+            where: {
+                subjectId: id,
+                categoryId: {
+                    in: categoriesId
+                }
+            }
+        });
 
-        const newSubject = await db.subject.create({
+        const newCategoryIds = categoriesId.filter(id => !existingAssociations.some(assoc => assoc.categoryId === id));
+
+
+        const subjectToUpdate = await db.subject.findUnique({ where: { id } });
+
+        if (!subjectToUpdate) {
+            return customResponse({
+                success: false,
+                error: { message: "Subject not found!" },
+                status: 404
+            });
+        }
+
+        const newSubject = await db.subject.update({
+            where: { id },
             data: {
                 name,
                 categories: {
-                    create: categoriesId.map(id => ({
+                    create: newCategoryIds.map(id => ({
                         category: {
                             connect: { id },
                         },
@@ -97,7 +125,7 @@ export async function POST(request: NextRequest) {
 
         return customResponse({
             success: true,
-            message: "New subject created!",
+            message: "Subject details updated!",
             data: newSubject,
             status: 200
         })

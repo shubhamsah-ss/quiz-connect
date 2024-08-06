@@ -47,10 +47,14 @@ export async function GET(request: NextRequest) {
             include: {
                 subject: {
                     select: {
+                        id: true,
                         name: true
                     }
                 },
                 question: true
+            },
+            orderBy: {
+                name: "asc"
             }
         });
 

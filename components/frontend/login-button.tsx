@@ -1,5 +1,5 @@
 "use client"
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import LoginForm from '@/components/form/form-login'
@@ -31,6 +31,8 @@ const LoginButton = ({
                     {children}
                 </DialogTrigger>
                 <DialogContent className='p-0 bg-transparent border-none'>
+                    <DialogTitle></DialogTitle>
+                    <DialogDescription></DialogDescription>
                     <LoginForm setOpen={setOpen} />
                 </DialogContent>
             </Dialog>

@@ -21,7 +21,7 @@ export type FormSelectProps = {
     label: string,
     placeholder: string,
     selectItems: SelectItemsType[],
-    form: UseFormReturn<any>
+    form: UseFormReturn<any>,
 }
 
 export type FormImageProps = {
@@ -32,5 +32,5 @@ export type FormImageProps = {
 }
 
 export interface FormMultiSelectProps extends FormSelectProps {
-
+    defaultInputs?: SelectItemsType[]
 }

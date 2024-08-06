@@ -1,9 +1,10 @@
 import customResponse from "@/lib/customResponse";
 import { db } from "@/lib/db";
+import { unstable_noStore } from "next/cache";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-
+    unstable_noStore()
     try {
         const categories = await db.category.findMany({
             include: {

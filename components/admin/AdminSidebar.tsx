@@ -1,10 +1,10 @@
 "use client"
-import React, { useState } from 'react'
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/Sidebar'
 import { IconAppWindow, IconBooks, IconFolder, IconLayoutDashboard, IconLogout, IconMessage, IconNote, IconSettings, IconUser } from '@tabler/icons-react'
-import ThemeSwitcher from '../ThemeSwitcher'
 import Image from 'next/image'
+import { useState } from 'react'
 import Logout from '../Logout'
+import ThemeSwitcher from '../ThemeSwitcher'
 import { Button } from '../ui/button'
 
 const links = [
@@ -53,7 +53,7 @@ const links = [
 const AdminSidebar = () => {
     const [open, setOpen] = useState(false);
     return (
-        <div className='md:h-screen'>
+        <div className='md:min-h-screen'>
             <Sidebar open={open} setOpen={setOpen}>
                 <SidebarBody className='justify-between gap-10'>
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">

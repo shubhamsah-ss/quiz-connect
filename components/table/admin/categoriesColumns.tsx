@@ -1,11 +1,12 @@
 "use client"
+import EditDialog from "@/components/admin/EditDialog"
+import AlertMessage from "@/components/AlertMessage"
+import EditCategory from "@/components/form/admin/edit-category"
 import Tooltip from "@/components/Tooltip"
-import { Button } from "@/components/ui/button"
 import { makeDeleteRequest } from "@/lib/apiResponse"
 import { CategoryType } from "@/types/categories"
 import { ColumnDef } from "@tanstack/react-table"
 import { format } from "date-fns"
-import { useState } from "react"
 import { toast } from "sonner"
 
 const handleDelete = async (id: string) => {
@@ -64,7 +65,16 @@ export const columns: ColumnDef<CategoryType>[] = [
         header: "Actions",
         cell: ({ row }) => {
             const id = row.original.id
-            return <Button onClick={() => handleDelete(id)} variant={"link"} className="text-red-500 hover:text-red-700 m-0 p-0">Delete</Button>
+            const name = row.original.name
+
+            return (
+                <div className="flex gap-4">
+                    <EditDialog title="Update Category">
+                        <EditCategory id={id} name={name} />
+                    </EditDialog>
+                    <AlertMessage trigger="Delete" onConfirm={() => handleDelete(id)} />
+                </div>
+            )
         }
     }
 ]

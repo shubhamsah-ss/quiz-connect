@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
                     include: {
                         category: {
                             select: {
+                                id: true,
                                 name: true
                             }
                         }
@@ -60,6 +61,9 @@ export async function GET(request: NextRequest) {
                     }
                 },
                 questions: true
+            },
+            orderBy: {
+                name: "asc"
             }
         });
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from "@/components/ui/button"
 import {
     Tooltip as ToolTip,
@@ -6,7 +5,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { TooltipArrow } from '@radix-ui/react-tooltip'
 
 type TooltipProps = {
     buttonLabel: string,
@@ -21,14 +19,17 @@ const Tooltip = ({ buttonLabel, tooltip }: TooltipProps) => {
                 <TooltipTrigger asChild>
                     <Button variant={"secondary"}>{buttonLabel}</Button>
                 </TooltipTrigger>
-                <TooltipContent  side='bottom'>
-                    <TooltipArrow className='dark:text-white' />
-                    {
-                        tooltip.map((item, i) => (
-                            <p key={i}>{item}</p>
-                        ))
-                    }
-                </TooltipContent>
+                {
+                    tooltip.length > 0 && <TooltipContent side='bottom'>
+                        <div className='absolute bottom-full left-1/2 -translate-x-1/2 border-b-4 border-b-black dark:border-b-white border-x-4 border-x-transparent'>
+                        </div>
+                        {
+                            tooltip.map((item, i) => (
+                                <p key={i} className="my-1">{item}</p>
+                            ))
+                        }
+                    </TooltipContent>
+                }
             </ToolTip>
         </TooltipProvider>
 

@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { cookies } from "next/headers";
 
-export async function POST(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
     const session = await auth()
     const cookiesStore = cookies()
     const adminAuth = cookiesStore.get("adminAuth")
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        if(session.user.role != "ADMIN"){
+        if (session.user.role != "ADMIN") {
             return customResponse({
                 success: false,
                 error: { message: "Not Authorized!" },
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        if(adminAuth?.value != "true"){
+        if (adminAuth?.value != "true") {
             return customResponse({
                 success: false,
                 error: { message: "Not Authorized!" },
@@ -45,19 +45,25 @@ export async function POST(request: NextRequest) {
 
         const payload = await request.json();
         const category: string = payload.values.category
+        const id: string = payload.values.id
 
         if (!category) {
             return customResponse({
                 success: false,
-                error: { message: "Category name is required!" },
+                error: { message: "New category name is required!" },
                 status: 400
             })
         }
 
-        const name = category.trim().toUpperCase()
+        const name = category.toUpperCase()
 
         const existingCategory = await db.category.findFirst({
-            where: { name }
+            where: {
+                name,
+                id: {
+                    not: id
+                }
+            }
         });
 
         if (existingCategory) {
@@ -68,15 +74,26 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        const newCategory = await db.category.create({
+        const categoryToUpdate = await db.category.findUnique({ where: { id } });
+
+        if (!categoryToUpdate) {
+            return customResponse({
+                success: false,
+                error: { message: "Category not found!" },
+                status: 404
+            });
+        }
+
+        const newCategory = await db.category.update({
+            where: { id },
             data: { name }
         });
 
         return customResponse({
             success: true,
-            message: "New category created!",
+            message: "Category details updated!",
             data: newCategory,
-            status: 201
+            status: 200
         })
     } catch (error: any) {
         return customResponse({

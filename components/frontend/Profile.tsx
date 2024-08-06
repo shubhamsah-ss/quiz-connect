@@ -12,7 +12,7 @@ const Profile = ({ user }: { user: UserType | null}) => {
         if(user){
             setTimeout(() => {
                 setLoading(false)
-            }, 1000)
+            }, 2000)
         }
     }, [user])
 

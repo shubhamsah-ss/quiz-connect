@@ -27,7 +27,9 @@ const AdminSubjects = () => {
                 </NewButton>
             </div>
             {/* AVAILABLE/EDIT CATEGORIES */}
-            <DataTable columns={columns} url='/admin/subjects' />
+            <div className='h-96 overflow-auto px-2'>
+                <DataTable columns={columns} url='/admin/subjects' />
+            </div>
         </div>
     )
 }

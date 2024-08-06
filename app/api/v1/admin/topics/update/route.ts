@@ -4,11 +4,12 @@ import { db } from "@/lib/db";
 import { NextRequest } from "next/server";
 
 type Topic = {
+    id: string,
     topic: string,
     subjectId: string
 }
 
-export async function POST(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
     try {
 
         const session = await auth()
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
         }
 
         const payload = await request.json()
-        const { topic, subjectId }: Topic = payload.values
+        const { topic, subjectId, id }: Topic = payload.values
         
         if(!topic || !subjectId){
             return customResponse({
@@ -51,8 +52,13 @@ export async function POST(request: NextRequest) {
         const name = topic.trim().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ")
         
         const existingTopic = await db.topic.findFirst({
-            where: { name }
-        })
+            where: {
+                name,
+                id: {
+                    not: id
+                }
+            }
+        });
 
         if(existingTopic){
             return customResponse({
@@ -74,7 +80,18 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        const newTopic = await db.topic.create({
+        const topicToUpdate = await db.topic.findUnique({ where: { id } });
+
+        if (!topicToUpdate) {
+            return customResponse({
+                success: false,
+                error: { message: "Topic not found!" },
+                status: 404
+            });
+        }
+
+        const newTopic = await db.topic.update({
+            where: {id},
             data: {
                 name, subjectId
             }
@@ -82,7 +99,7 @@ export async function POST(request: NextRequest) {
 
         return customResponse({
             success: true,
-            message: "New topic created!",
+            message: "Topic details updated!",
             data: newTopic,
             status: 201
         })

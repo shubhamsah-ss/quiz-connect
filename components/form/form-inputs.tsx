@@ -1,6 +1,6 @@
 "use client"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { FormImageProps, FormInputProps, FormMultiSelectProps, FormSelectProps } from "@/types/form"
+import { FormImageProps, FormInputProps, FormMultiSelectProps, FormSelectProps, SelectItemsType } from "@/types/form"
 import { IconEye, IconEyeClosed } from "@tabler/icons-react"
 import { Camera, X } from "lucide-react"
 import Image from "next/image"
@@ -55,6 +55,7 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
 
 
 const FormSelect = ({ form, name, label, placeholder, selectItems }: FormSelectProps) => {
+
     return (
         <FormField
             control={form.control}
@@ -85,19 +86,22 @@ const FormSelect = ({ form, name, label, placeholder, selectItems }: FormSelectP
     )
 }
 
+
+
 const FormMultiSelect = ({
     name,
     label,
     placeholder,
     form,
-    selectItems
+    selectItems,
+    defaultInputs
 }: FormMultiSelectProps) => {
     const [value, setValue] = useState<string>("")
     const [inputs, setInputs] = useState<string[]>([])
 
     const handleChange = (value: string) => {
         setValue(value)
-        if (value) {
+        if (value && !inputs.includes(value)) {
             add(value)
         }
     }
@@ -122,6 +126,14 @@ const FormMultiSelect = ({
         acc[item.id] = item.name;
         return acc;
     }, {} as { [key: string]: string });
+
+    useEffect(() => {
+        if(defaultInputs) {
+            if (selectItems.length > 0) {
+                setInputs(defaultInputs.map(item => item.id))
+            }
+        }
+    }, [selectItems, defaultInputs])
 
     return (
         <div>
@@ -155,8 +167,8 @@ const FormMultiSelect = ({
                 <div className="flex flex-wrap gap-4 mt-3">
                     {inputs.map((item, i) => (
                         <div
-                            key={i}
-                            className="flex space-x-1 items-center bg-slate-200 dark:bg-slate-700 py-1 px-3 rounded-lg relative dark:text-slate-400"
+                            key={`${i} - ${item}`}
+                            className="flex space-x-1 items-center bg-neutral-100 dark:bg-neutral-900 py-1 px-3 rounded-lg relative dark:text-white"
                         >
                             <p>{selectItemMap[item]}</p>
                             <X
@@ -167,6 +179,11 @@ const FormMultiSelect = ({
                     ))}
                 </div>
             )}
+            {
+                selectItems.length == 0 && (
+                    <p className="dark:text-white animate-pulse">...</p>
+                )
+            }
         </div>
     )
 }

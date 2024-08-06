@@ -36,7 +36,7 @@ const NewTopicForm = ({ redirect }: { redirect?: () => void }) => {
             setSubjects(response.data)
 
         }
-        if (!subjects) fetchSubjects()
+        if (subjects.length == 0) fetchSubjects()
     }, [subjects])
 
     const onSubmit = async (values: Values) => {

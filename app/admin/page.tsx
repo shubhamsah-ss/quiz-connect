@@ -14,10 +14,12 @@ const AdminPage = () => {
     }
 
     return (
-        <div className="max-w-md w-full mx-auto">
+        <div className="flex justify-center items-center w-screen h-screen">
+            <div className='max-w-md w-full mx-auto'>
             <Suspense>
                 <AdminAuthForm />
             </Suspense>
+            </div>
         </div>
     )
 }

@@ -22,7 +22,7 @@ export default function AdminAuthLayout({ children }: Readonly<{ children: React
     }
 
     return (
-        <div className='h-screen bg-white dark:bg-black'>
+        <div className='min-h-screen bg-white dark:bg-black'>
             {children}
         </div>
     )
