@@ -22,6 +22,9 @@ export async function GET(request: NextRequest) {
             include: {
                 subject: true,
                 question: true
+            },
+            orderBy: {
+                name: "asc"
             }
         })
 
