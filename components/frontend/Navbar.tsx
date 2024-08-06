@@ -57,12 +57,12 @@ const Navbar = () => {
 
                 </div>
                 <ul className={`absolute right-0 z-50 px-5 transition-all bg-white dark:bg-black md:bg-transparent h-screen duration-500 ${open ? "w-[100vw]" : "w-0 opacity-0 md:opacity-100"}
-                md:w-auto md:pl-0 md:static md:px-3 md:space-x-1 md:flex md:items-center md:h-full`}>
+                md:w-auto md:pl-0 md:static md:px-3 md:space-x-3 md:flex md:items-center md:h-full`}>
                     <li>
                         <ThemeSwitcher />
                     </li>
                     <li>
-                        <Button variant={"link"} asChild>
+                        <Button variant={"link"} className='m-0 p-1' asChild>
                         <Link onClick={() => setOpen(false)} href={"/questions"}>Questions</Link>
                         </Button>
                     </li>
@@ -70,7 +70,7 @@ const Navbar = () => {
                         isAuthenticated ? (
                             <>
                                 <li>
-                                    <Button variant={"link"} asChild>
+                                    <Button variant={"link"} className='m-0 p-1' asChild>
                                         <Link onClick={() => setOpen(false)} href={"/dashboard"}>Dashboard</Link>
                                     </Button>
                                 </li>
@@ -82,7 +82,7 @@ const Navbar = () => {
                             <>
                                 <li>
                                     <LoginButton mode='modal' asChild>
-                                        <Button variant={"link"}>Login</Button>
+                                        <Button variant={"link"} className='m-0 p-1'>Login</Button>
                                     </LoginButton>
                                 </li>
 

@@ -85,6 +85,7 @@ const AdminAuthForm = () => {
                         form={form}
                         name='adminPin'
                         disabled={isLoading}
+                        type='password'
                         inputRest={{
                             autoComplete: "off",
                             inputMode: "numeric",

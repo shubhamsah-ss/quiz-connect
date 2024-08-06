@@ -1,41 +1,32 @@
 "use client"
 import NewButton from '@/components/admin/New'
-import NewCategoryForm from '@/components/form/admin/new-category'
 import Heading from '@/components/frontend/Heading'
-import { columns } from '@/components/table/admin/categoriesColumns'
+import { columns } from '@/components/table/admin/subjectColumns'
 import { DataTable } from '@/components/table/DataTable'
-import { makeGetRequest } from '@/lib/apiResponse'
-import React, { useCallback, useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
+import { toast } from 'sonner'
+
+const NewSubjectForm = dynamic(() => import('@/components/form/admin/new-subject'))
 
 const AdminSubjects = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     function redirect() {
+        toast.success("New subject created! Refresh table to see changes.")
         setOpen(false)
     }
-
-    const fetchSubjects = useCallback(async() => {
-        try {
-            const response = await makeGetRequest(`/categories`);
-        } catch (error) {
-            
-        }
-    }, [])
-
-    useEffect(() => {
-        fetchSubjects()
-    },[fetchSubjects])
 
     return (
         <div className='space-y-10'>
             <Heading heading={`Subjects`} />
-            {/* NEW SUBJECTS HANDLER */}
+            {/* NEW SUBJECT HANDLER */}
             <div className='flex justify-end w-full'>
-                <NewButton heading='New Subjects' label="New Subject" open={open} setOpen={setOpen}>
-                    <NewCategoryForm redirect={redirect} />
+                <NewButton label="New Subject" open={open} setOpen={setOpen}>
+                    <NewSubjectForm redirect={redirect} />
                 </NewButton>
             </div>
-            {/* AVAILABLE/EDIT SUBJECTS */}
+            {/* AVAILABLE/EDIT CATEGORIES */}
             <DataTable columns={columns} url='/admin/subjects' />
         </div>
     )

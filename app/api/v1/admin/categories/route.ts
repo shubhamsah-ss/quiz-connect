@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
             })
         }
 
-        if(session.user.role != "ADMIN"){
+        if (session.user.role != "ADMIN") {
             return customResponse({
                 success: false,
                 error: { message: "Not Authorized!" },
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
             })
         }
 
-        if(adminAuth?.value != "true"){
+        if (adminAuth?.value != "true") {
             return customResponse({
                 success: false,
                 error: { message: "Not Authorized!" },
@@ -45,7 +45,16 @@ export async function GET(request: NextRequest) {
 
         const categories = await db.category.findMany({
             include: {
-                subjects: true
+                subjects: {
+                    include: {
+                        subject: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    }
+                },
+                questions: true
             }
         });
 

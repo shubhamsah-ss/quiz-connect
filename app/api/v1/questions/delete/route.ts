@@ -33,7 +33,7 @@ export async function DELETE(request: NextRequest) {
         if(canDelete?.approved) {
             return customResponse({
                 success: false,
-                error: { message: "Approved questions can not be deleted!" },
+                error: { message: "Approved questions cannot be deleted!" },
                 status: 400
             })
         }

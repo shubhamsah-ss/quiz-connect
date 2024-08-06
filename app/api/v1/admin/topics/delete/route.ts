@@ -44,12 +44,12 @@ export async function DELETE(request: NextRequest) {
             })
         }
 
-        let id = searchParams.get("category")?.toString()
+        let id = searchParams.get("topic")?.toString()
 
-        const canDelete = await db.category.findUnique({
+        const canDelete = await db.topic.findUnique({
             where: {id},
             include: {
-                questions: {
+                question: {
                     where: {
                         status: "APPROVED"
                     }
@@ -57,19 +57,19 @@ export async function DELETE(request: NextRequest) {
             }
         })
 
-        if(canDelete?.questions.length != 0){
+        if(canDelete?.question.length != 0){
             return customResponse({
                 success: false,
-                error: { message: "Category with approved questions cannot be deleted!" },
+                error: { message: "Topics with approved questions cannot be deleted!" },
                 status: 400
             })
         }
 
-        const category = await db.category.delete({
+        const topic = await db.topic.delete({
             where: {id}
         })
         
-        if (!category) {
+        if (!topic) {
             return customResponse({
                 success: false,
                 error: { message: "Something went wrong!" },
@@ -79,7 +79,7 @@ export async function DELETE(request: NextRequest) {
 
         return customResponse({
             success: true,
-            message: `Category deleted!`,
+            message: `Topic deleted!`,
             data: {},
             status: 200
         })

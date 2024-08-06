@@ -1,17 +1,16 @@
-import { NextRequest } from "next/server"
-import customResponse from "@/lib/customResponse"
-import { db } from "@/lib/db";
 import { auth } from "@/auth";
+import customResponse from "@/lib/customResponse";
+import { db } from "@/lib/db";
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 
-export async function DELETE(request: NextRequest) {
+export async function GET(request: NextRequest) {
+
     const session = await auth()
     const cookiesStore = cookies()
     const adminAuth = cookiesStore.get("adminAuth")
-    const searchParams = request.nextUrl.searchParams;
 
     try {
-
         if (!session || !session.user) {
             return customResponse({
                 success: false,
@@ -44,46 +43,44 @@ export async function DELETE(request: NextRequest) {
             })
         }
 
-        let id = searchParams.get("category")?.toString()
-
-        const canDelete = await db.category.findUnique({
-            where: {id},
+        const subjects = await db.subject.findMany({
             include: {
-                questions: {
-                    where: {
-                        status: "APPROVED"
+                categories: {
+                    include: {
+                        category: {
+                            select: {
+                                name: true
+                            }
+                        }
                     }
-                }
+                },
+                topics: {
+                    select:{
+                        name: true
+                    }
+                },
+                questions: true
             }
-        })
+        });
 
-        if(canDelete?.questions.length != 0){
+        if (!subjects || subjects.length == 0) {
             return customResponse({
                 success: false,
-                error: { message: "Category with approved questions cannot be deleted!" },
-                status: 400
-            })
+                error: { message: `0 record found!` },
+                status: 404,
+            });
         }
 
-        const category = await db.category.delete({
-            where: {id}
-        })
-        
-        if (!category) {
-            return customResponse({
-                success: false,
-                error: { message: "Something went wrong!" },
-                status: 500
-            })
-        }
+        const count: number = subjects.length;
 
         return customResponse({
             success: true,
-            message: `Category deleted!`,
-            data: {},
-            status: 200
-        })
+            message: `${count} records found!`,
+            data: subjects,
+            status: 200,
+        });
     } catch (error: any) {
+
         return customResponse({
             success: false,
             error: { message: "Internal server error!" },

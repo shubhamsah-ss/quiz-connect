@@ -121,7 +121,7 @@ export const MobileSidebar = ({
             >
                 <div className="flex justify-end z-20 w-full">
                     <IconMenu2
-                        className="text-neutral-800 dark:text-neutral-200"
+                        className="text-neutral-800 hover:cursor-pointer dark:text-neutral-200"
                         onClick={() => setOpen(!open)}
                     />
                 </div>
@@ -141,7 +141,7 @@ export const MobileSidebar = ({
                             )}
                         >
                             <div
-                                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+                                className="absolute hover:cursor-pointer right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
                                 onClick={() => setOpen(!open)}
                             >
                                 <IconX />
@@ -158,10 +158,12 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
     link,
     className,
+    onClick,
     ...props
 }: {
     link: Links;
     className?: string;
+    onClick?: () => void
     props?: LinkProps;
 }) => {
     const { open, animate } = useSidebar();
@@ -172,6 +174,7 @@ export const SidebarLink = ({
                 "flex items-center justify-start gap-2  group/sidebar py-2",
                 className
             )}
+            onClick={onClick}
             {...props}
         >
             {link.icon}

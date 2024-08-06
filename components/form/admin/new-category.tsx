@@ -12,7 +12,7 @@ type Values = {
     category: string
 }
 
-const NewCategoryForm = ({ redirect }: {redirect?: Function}) => {
+const NewCategoryForm = ({ redirect }: {redirect?: () => void}) => {
     const [isLoading, startLoading] = useTransition()
     
     const [error, setError] = useState<string | undefined>()

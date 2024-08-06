@@ -22,10 +22,11 @@ const AdminCategories = () => {
             <Heading heading={`Categories`} />
             {/* NEW CATEGORIES HANDLER */}
             <div className='flex justify-end w-full'>
-                <NewButton heading='New Category' label="New Category" open={open} setOpen={setOpen}>
+                <NewButton label="New Category" open={open} setOpen={setOpen}>
                     <NewCategoryForm redirect={redirect} />
                 </NewButton>
             </div>
+            
             {/* AVAILABLE/EDIT CATEGORIES */}
             <DataTable columns={columns} url='/admin/categories' />
         </div>

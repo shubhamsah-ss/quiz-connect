@@ -5,11 +5,10 @@ import { makeDeleteRequest } from "@/lib/apiResponse"
 import { CategoryType } from "@/types/categories"
 import { ColumnDef } from "@tanstack/react-table"
 import { format } from "date-fns"
-import { useState } from "react"
 import { toast } from "sonner"
 
 const handleDelete = async (id: string) => {
-    const response = await makeDeleteRequest(`/admin/categories/delete?category=${id}`)
+    const response = await makeDeleteRequest(`/admin/subjects/delete?subject=${id}`)
 
     if (response.success) {
         toast.success(`${response.message} Refresh table to see changes.`)
@@ -23,24 +22,32 @@ const handleDelete = async (id: string) => {
 export const columns: ColumnDef<CategoryType>[] = [
     {
         accessorKey: "name",
-        header: "Category name",
+        header: "Subject name",
     },
     {
-        accessorKey: "subjects",
-        header: "Total subjects",
+        accessorKey: "categories",
+        header: "Total categories",
         cell: ({ row }) => {
-            const subjects: {
-                subject: {
+            const categories: {
+                category: {
                     name: string
                 }
-            }[] = row.getValue("subjects")
+            }[] = row.getValue("categories")
 
             // Extract subject names
-            const names = subjects.map(sub => sub.subject.name)
+            const names = categories.map(sub => sub.category.name)
 
             return (
-                <Tooltip buttonLabel={`${subjects?.length || 0}`} tooltip={names} />
+                <Tooltip buttonLabel={`${categories?.length || 0}`} tooltip={names} />
             )
+        }
+    },
+    {
+        accessorKey: "topics",
+        header: "Total topics",
+        cell: ({ row }) => {
+            const topics: string[] = row.getValue("topics")
+            return topics?.length || 0
         }
     },
     {

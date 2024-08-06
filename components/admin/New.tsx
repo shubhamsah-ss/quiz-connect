@@ -6,7 +6,6 @@ type NewButtonProps = {
     open: boolean
     setOpen: Dispatch<SetStateAction<any>>
     children: ReactNode,
-    heading: string,
 }
 
 const NewButton = ({
@@ -14,7 +13,6 @@ const NewButton = ({
     open,
     setOpen,
     children,
-    heading,
 }: NewButtonProps) => {
     return (
         <Dialog open={open} onOpenChange={() => setOpen((prev: boolean) => !prev)}>
@@ -27,11 +25,11 @@ const NewButton = ({
                 <DialogTitle>
                     <DialogHeader>
                         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-                            {heading}
+                            {label}
                         </h2>
                     </DialogHeader>
                     <DialogDescription>
-                        Add {heading}
+                        Add {label}
                     </DialogDescription>
                 </DialogTitle>
                 {children}

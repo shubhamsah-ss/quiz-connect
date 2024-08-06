@@ -22,7 +22,7 @@ export default function AdminAuthLayout({ children }: Readonly<{ children: React
     }
 
     return (
-        <div className='flex justify-center items-center h-screen bg-white dark:bg-black'>
+        <div className='h-screen bg-white dark:bg-black'>
             {children}
         </div>
     )

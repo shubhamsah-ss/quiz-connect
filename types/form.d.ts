@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Dispatch } from "react"
 import { UseFormReturn } from "react-hook-form"
 
 export type FormInputProps = {
@@ -29,4 +29,8 @@ export type FormImageProps = {
     alt: string, 
     disabled: boolean, 
     form: UseFormReturn<any>
+}
+
+export interface FormMultiSelectProps extends FormSelectProps {
+
 }

@@ -1,8 +1,8 @@
 "use client"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { FormImageProps, FormInputProps, FormSelectProps } from "@/types/form"
+import { FormImageProps, FormInputProps, FormMultiSelectProps, FormSelectProps } from "@/types/form"
 import { IconEye, IconEyeClosed } from "@tabler/icons-react"
-import { Camera } from "lucide-react"
+import { Camera, X } from "lucide-react"
 import Image from "next/image"
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import { Input } from "@/components/ui/input"
@@ -31,7 +31,7 @@ const FormInput = ({ form, disabled, name, label, type, inputRest, rest }: FormI
                     <div className='relative'>
                         <FormControl>
                             <Input id={name} type={type === "password" ? (isVisible ? "text" : "password") : type || "text"}
-                                {...field}  
+                                {...field}
                                 {...inputRest}
                             />
                         </FormControl>
@@ -82,6 +82,92 @@ const FormSelect = ({ form, name, label, placeholder, selectItems }: FormSelectP
                 </FormItem>
             )}
         />
+    )
+}
+
+const FormMultiSelect = ({
+    name,
+    label,
+    placeholder,
+    form,
+    selectItems
+}: FormMultiSelectProps) => {
+    const [value, setValue] = useState<string>("")
+    const [inputs, setInputs] = useState<string[]>([])
+
+    const handleChange = (value: string) => {
+        setValue(value)
+        if (value) {
+            add(value)
+        }
+    }
+
+    const add = (value: string) => {
+        const updatedInputs = [...inputs, value]
+        setInputs(updatedInputs)
+        form.setValue(name, updatedInputs)
+    }
+
+    const remove = (i: number) => {
+        const updatedInputs = inputs.filter((_, index) => index !== i)
+        setInputs(updatedInputs)
+        form.setValue(name, updatedInputs)
+    }
+
+    useEffect(() => {
+        if (inputs.length == 0) setValue("")
+    }, [inputs])
+
+    const selectItemMap = selectItems.reduce((acc, item) => {
+        acc[item.id] = item.name;
+        return acc;
+    }, {} as { [key: string]: string });
+
+    return (
+        <div>
+            <FormField
+                control={form.control}
+                name={name}
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{label}</FormLabel>
+                        <Select onValueChange={(value: string) => handleChange(value)} value={value}>
+                            <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={placeholder} />
+                                </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {selectItems.map((item) => (
+                                        <SelectItem key={item.name} value={item.id}>
+                                            {item.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+            {inputs.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-3">
+                    {inputs.map((item, i) => (
+                        <div
+                            key={i}
+                            className="flex space-x-1 items-center bg-slate-200 dark:bg-slate-700 py-1 px-3 rounded-lg relative dark:text-slate-400"
+                        >
+                            <p>{selectItemMap[item]}</p>
+                            <X
+                                onClick={() => remove(i)}
+                                className="w-3 h-3 absolute -top-1 -right-1 rounded-full bg-red-400 text-white hover:bg-red-500 cursor-pointer"
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
     )
 }
 
@@ -167,7 +253,9 @@ const FormImage = ({ src, alt, disabled, form }: FormImageProps) => {
 }
 
 export {
-    FormImage, FormInput,
-    FormSelect
+    FormImage,
+    FormInput,
+    FormSelect,
+    FormMultiSelect
 }
 

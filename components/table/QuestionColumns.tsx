@@ -12,9 +12,7 @@ const handleDelete = async(id:string) => {
     const response = await makeDeleteRequest(`/questions/delete?question=${id}`)
 
     if(response.success) {
-        toast.success(`${response.message} Refresh table to see changes`, {
-            className: "bg-green-600 text-white border-0"
-        })
+        toast.success(`${response.message} Refresh table to see changes`)
         
     } else {
         toast.error(response.error, {
@@ -112,8 +110,8 @@ export const columns: ColumnDef<QuestionsType>[] = [
     {
         header: "Actions",
         cell: ({ row }) => {
-            const question = row.original.id
-            return <Button onClick={() => handleDelete(question)} variant={"link"} className="text-red-500 hover:text-red-700 m-0 p-0">Delete</Button>
+            const id = row.original.id
+            return <Button onClick={() => handleDelete(id)} variant={"link"} className="text-red-500 hover:text-red-700 m-0 p-0">Delete</Button>
         }
     }
 ]
